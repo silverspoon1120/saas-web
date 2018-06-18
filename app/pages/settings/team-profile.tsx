@@ -137,7 +137,7 @@ class TeamProfile extends React.Component<MyProps, MyState> {
       return (
         <div style={{ padding: '0px', fontSize: '14px', height: '100%' }}>
           <Head>
-            <title>Settings for {currentTeam.name}</title>
+            <title>Team Settings: ${currentTeam.name}</title>
             <meta name="description" content="Only the Team Leader can access this page" />
           </Head>
           <Grid container style={styleGrid}>
@@ -156,8 +156,8 @@ class TeamProfile extends React.Component<MyProps, MyState> {
     return (
       <div style={{ padding: '0px', fontSize: '14px', height: '100%' }}>
         <Head>
-          <title>Setting for {currentTeam.name}</title>
-          <meta name="description" content={`Settings for ${currentTeam.name}`} />
+          <title>Team Settings: ${currentTeam.name}</title>
+          <meta name="description" content={`Settings for Team ${currentTeam.name}`} />
         </Head>
         <Grid container style={styleGrid}>
           <Grid item sm={2} xs={12} style={styleGridItem}>
