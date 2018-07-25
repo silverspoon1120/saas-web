@@ -33,7 +33,7 @@ async function insertTemplates() {
       subject: 'Welcome to SaaS by Async',
       message: `{{userName}},
         <p>
-          Thanks for signing up on our <a href="https://saas-app.async-await.com" target="blank">demo app</a>!
+          Thanks for signing at our <a href="https://github.com/async-labs/saas" target="blank">SaaS boilerplate</a>!
         <br/>
           Note that any data you save on the demo app will be deleted after 30 days.
         </p>
