@@ -81,7 +81,7 @@ To run locally, you will need to run two apps: `api` and `app`.
 
   # Used in api/server/mailchimp.ts
   MAILCHIMP_API_KEY="xxxxxx"
-  MAILCHIMP_REGION="xxxx"
+  MAILCHIMP_REGION="xxxxxx"
   MAILCHIMP_SAAS_ALL_LIST_ID="xxxxxx"
 
   # All env variables above this line are needed for successful user signup
@@ -231,10 +231,7 @@ Check out projects built with the code in this open source app. Feel free to add
 
 
 ## Hire our team
-If you're interested in hiring our team to build custom SaaS features, fill out our [form](https://goo.gl/forms/4kk6mvowOjkQY21y2).
-
-We currently have 1 spot avaialble (up to 40h/week engagement).
-We charge $100/h and are selective about the type of product and client.
+If you're interested in hiring our team to build custom SaaS features or provide consulting, fill out our [form](https://goo.gl/forms/4kk6mvowOjkQY21y2).
 
 If you are a small team, who works best in a calm environment and builds a SaaS product that solves a real problem - we want to hear from you.
 
