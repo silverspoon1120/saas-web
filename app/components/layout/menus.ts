@@ -1,8 +1,15 @@
+import env from '../../lib/env';
 import { Team } from '../../lib/store';
 
-import { URL_API } from '../../lib/consts';
+const dev = process.env.NODE_ENV !== 'production';
+const { PRODUCTION_URL_API } = env;
+const LOG_OUT_URL = dev ? 'http://localhost:8000' : PRODUCTION_URL_API;
 
-const menuOnTheRight = ({ currentTeam }: { currentTeam: Team }) => [
+const menuOnTheRight = ({
+  currentTeam,
+}: {
+  currentTeam: Team;
+}) => [
   {
     text: 'Your Settings',
     href: '/your-settings',
@@ -25,8 +32,8 @@ const menuOnTheRight = ({ currentTeam }: { currentTeam: Team }) => [
   },
   {
     text: 'Log out',
-    href: `${URL_API}/logout`,
-    as: `${URL_API}/logout`,
+    href: `${LOG_OUT_URL}/logout`,
+    as: `${LOG_OUT_URL}/logout`,
     simple: true,
   },
 ];

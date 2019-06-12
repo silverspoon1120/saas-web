@@ -1,6 +1,8 @@
 import sendRequestAndGetResponse from './sendRequestAndGetResponse';
 
-import { LAMBDA_API_ENDPOINT } from '../consts';
+import env from '../env';
+
+const { LAMBDA_API_ENDPOINT } = env;
 
 const BASE_PATH = '/api/v1/team-member';
 

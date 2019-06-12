@@ -2,6 +2,8 @@ import * as mobx from 'mobx';
 import { action, decorate, IObservableArray, observable, runInAction } from 'mobx';
 import * as io from 'socket.io-client';
 
+import getApiUrl from '../api/getRootUrl';
+
 import { addTeam } from '../api/team-leader';
 import { getTeamList } from '../api/team-member';
 
@@ -11,8 +13,6 @@ import { Team } from './team';
 import { User } from './user';
 
 mobx.configure({ enforceActions: 'observed' });
-
-import { IS_DEV, URL_API } from '../consts';
 
 class Store {
   public isServer: boolean;
@@ -252,6 +252,7 @@ let store: Store = null;
 
 function initStore(initialState = {}) {
   const isServer = typeof window === 'undefined';
+  const dev = process.env.NODE_ENV !== 'production';
 
   if (isServer) {
     return new Store({ initialState, isServer: true });
@@ -261,7 +262,7 @@ function initStore(initialState = {}) {
     if (!store) {
       const globalStore: Store = win.__STORE__;
 
-      if (IS_DEV) {
+      if (dev) {
         // save initialState globally and use saved state when initialState is empty
         // initialState becomes "empty" on some HMR
         if (!win.__INITIAL_STATE__) {
@@ -277,11 +278,11 @@ function initStore(initialState = {}) {
         }
       }
 
-      const socket = io(URL_API);
+      const socket = io(getApiUrl());
 
       store = new Store({ initialState, socket, isServer: false });
 
-      if (IS_DEV) {
+      if (dev) {
         win.__STORE__ = store;
       }
     }
