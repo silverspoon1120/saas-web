@@ -169,7 +169,11 @@ class EditDiscussionForm extends React.Component<Props, State> {
 
     NProgress.start();
     try {
-      await discussion.edit({ name, memberIds, notificationType });
+      await discussion.edit({
+        name,
+        memberIds: [discussion.store.currentUser._id, ...memberIds],
+        notificationType,
+      });
 
       this.setState({ name: '', memberIds: [], disabled: false, notificationType: 'default' });
       notify('You successfully edited Discussion.');
