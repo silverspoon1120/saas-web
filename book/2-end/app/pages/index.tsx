@@ -4,7 +4,7 @@ import * as React from 'react';
 import NProgress from 'nprogress';
 
 import confirm from '../lib/confirm';
-import notify from '../lib/notify';
+import notify from '../lib/notifier';
 
 import Layout from '../components/layout';
 
