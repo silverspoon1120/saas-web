@@ -18,12 +18,11 @@ class MyDocument extends Document {
     return {
       ...initialProps,
       // Styles fragment is rendered after the app and page rendering finish.
-      styles: <React.Fragment>{sheets.getStyleElement()}</React.Fragment>,
+      styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
     };
   };
-  public render() {
-    console.log(process.env.URL_APP);
 
+  public render() {
     const isThemeDark = false;
 
     return (
