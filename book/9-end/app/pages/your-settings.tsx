@@ -15,8 +15,7 @@ import { resizeImage } from '../lib/resizeImage';
 import { Store } from '../lib/store';
 import withAuth from '../lib/withAuth';
 
-// 10
-// import { BUCKET_FOR_TEAM_AVATARS } from '../lib/consts';
+import { BUCKET_FOR_TEAM_AVATARS } from '../lib/consts';
 
 const styleGrid = {
   height: '100%',
@@ -79,15 +78,13 @@ class YourSettings extends React.Component<MyProps, MyState> {
                 >
                   done
                 </i>{' '}
-                {currentUser.isSignedupViaGoogle
-                  ? 'You signed up on Async using your Google account.'
-                  : 'You signed up on Async using your email.'}
+                You signed up on Async using your Google account.
                 <li>
                   {' '}
-                  Your email: <b>{currentUser.email}</b>
+                  Your Google/Async email: <b>{currentUser.email}</b>
                 </li>
                 <li>
-                  Your name: <b>{currentUser.displayName}</b>
+                  Your Google/Async username: <b>{currentUser.displayName}</b>
                 </li>
               </p>
               <form onSubmit={this.onSubmit} autoComplete="off">
@@ -196,10 +193,7 @@ class YourSettings extends React.Component<MyProps, MyState> {
 
     fileElm.value = '';
 
-    const bucket = 'saas-users-avatars';
-
-    // 10
-    // const bucket = BUCKET_FOR_TEAM_AVATARS;
+    const bucket = BUCKET_FOR_TEAM_AVATARS;
 
     const prefix = `${currentUser.slug}`;
 
@@ -242,7 +236,4 @@ class YourSettings extends React.Component<MyProps, MyState> {
   };
 }
 
-export default withAuth(YourSettings);
-
-// 10
-// export default withAuth(YourSettings, { teamRequired: false });
+export default withAuth(YourSettings, { teamRequired: false });

@@ -20,7 +20,6 @@ class User {
   public displayName: string | null;
   public avatarUrl: string | null;
   public defaultTeamSlug: string;
-  public isSignedupViaGoogle: boolean;
 
   // 11
   // public hasCardInformation: boolean;
@@ -61,7 +60,6 @@ class User {
 
     this.darkTheme = !!params.darkTheme;
     this.isLoggedIn = !!params.isLoggedIn;
-    this.isSignedupViaGoogle = !!params.isSignedupViaGoogle;
 
     // 11
     // this.hasCardInformation = params.hasCardInformation;

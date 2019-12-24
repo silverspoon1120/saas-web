@@ -8,19 +8,19 @@
 
 // import LoginButton from '../components/common/LoginButton';
 // import Layout from '../components/layout';
-// import { acceptAndGetInvitedTeamByToken, removeInvitationIfMemberAdded } from '../lib/api/public';
+// import { getInvitedTeamByToken, removeInvitationIfMemberAdded } from '../lib/api/public';
 // import { Store, Team } from '../lib/store';
 // import withAuth from '../lib/withAuth';
 
 // class Invitation extends React.Component<{ store: Store; team: Team; token: string }> {
-//   public static async getInitialProps({ query, req }) {
+//   public static async getInitialProps({ query }) {
 //     const { token } = query;
 //     if (!token) {
 //       return {};
 //     }
 
 //     try {
-//       const { team } = await acceptAndGetInvitedTeamByToken(token, req);
+//       const { team } = await getInvitedTeamByToken(token);
 
 //       return { team, token };
 //     } catch (error) {

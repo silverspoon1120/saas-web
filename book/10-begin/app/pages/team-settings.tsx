@@ -7,6 +7,7 @@ import { observer } from 'mobx-react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
 import * as React from 'react';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -308,7 +309,7 @@ class TeamSettings extends React.Component<MyProps, MyState> {
                           <Avatar
                             role="presentation"
                             src={m.avatarUrl}
-                            alt={(m.displayName || m.email)[0]}
+                            alt={m.avatarUrl}
                             key={m._id}
                             style={{
                               margin: '0px 5px',
@@ -319,7 +320,7 @@ class TeamSettings extends React.Component<MyProps, MyState> {
                             }}
                           />
                         </Hidden>
-                        {m.displayName || m.email}
+                        {m.displayName}
                       </TableCell>
                       <TableCell>
                         {isTL && m._id !== currentUser._id ? 'Team Member' : 'Team Leader'}

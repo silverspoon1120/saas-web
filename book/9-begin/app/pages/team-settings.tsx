@@ -8,6 +8,7 @@
 // import Head from 'next/head';
 // import NProgress from 'nprogress';
 // import * as React from 'react';
+
 // import Table from '@material-ui/core/Table';
 // import TableBody from '@material-ui/core/TableBody';
 // import TableCell from '@material-ui/core/TableCell';
@@ -149,7 +150,7 @@
 //     this.setState({ inviteMemberOpen: true });
 //   };
 
-//   public removeMember = (event) => {
+//   public removeMember = event => {
 //     const { currentTeam } = this.props.store;
 //     if (!currentTeam) {
 //       notify('You have not selected a Team.');
@@ -165,7 +166,7 @@
 //     confirm({
 //       title: 'Are you sure?',
 //       message: '',
-//       onAnswer: async (answer) => {
+//       onAnswer: async answer => {
 //         if (answer) {
 //           try {
 //             await currentTeam.removeMember(userId);
@@ -237,7 +238,7 @@
 //                 <TextField
 //                   value={newName}
 //                   helperText="Team name as seen by your team members"
-//                   onChange={(event) => {
+//                   onChange={event => {
 //                     this.setState({ newName: event.target.value });
 //                   }}
 //                 />
@@ -302,14 +303,14 @@
 //                 </TableHead>
 
 //                 <TableBody>
-//                   {Array.from(currentTeam.members.values()).map((m) => (
+//                   {Array.from(currentTeam.members.values()).map(m => (
 //                     <TableRow key={m._id}>
 //                       <TableCell style={{ width: '300px' }}>
 //                         <Hidden smDown>
 //                           <Avatar
 //                             role="presentation"
 //                             src={m.avatarUrl}
-//                             alt={(m.displayName || m.email)[0]}
+//                             alt={m.avatarUrl}
 //                             key={m._id}
 //                             style={{
 //                               margin: '0px 5px',
@@ -320,7 +321,7 @@
 //                             }}
 //                           />
 //                         </Hidden>
-//                         {m.displayName || m.email}
+//                         {m.displayName}
 //                       </TableCell>
 //                       <TableCell>
 //                         {isTL && m._id !== currentUser._id ? 'Team Member' : 'Team Leader'}
@@ -349,7 +350,7 @@
 //                     </TableHead>
 
 //                     <TableBody>
-//                       {Array.from(currentTeam.invitedUsers.values()).map((i) => (
+//                       {Array.from(currentTeam.invitedUsers.values()).map(i => (
 //                         <TableRow key={i._id}>
 //                           <TableCell style={{ width: '300px' }}>{i.email}</TableCell>
 //                           <TableCell>Sent</TableCell>

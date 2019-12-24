@@ -38,11 +38,6 @@ const mongoSchema = new mongoose.Schema({
     accessToken: String,
     refreshToken: String,
   },
-  isSignedupViaGoogle: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
   slug: {
     type: String,
     required: true,
@@ -190,7 +185,7 @@ interface UserModel extends mongoose.Model<UserDocument> {
 
   getTeamMembers({ userId, teamId }: { userId: string; teamId: string }): Promise<UserDocument[]>;
 
-  signInOrSignUpViaGoogle({
+  signInOrSignUp({
     googleId,
     googleToken,
     email,
@@ -323,23 +318,17 @@ class UserClass extends mongoose.Model {
   //     .setOptions({ lean: true });
   // }
 
-  public static async signInOrSignUpViaGoogle({
-    googleId,
-    email,
-    googleToken,
-    displayName,
-    avatarUrl,
-  }) {
-    const user = await this.findOne({ email })
-      .select([...this.publicFields(), 'googleId'].join(' '))
+  public static async signInOrSignUp({ googleId, email, googleToken, displayName, avatarUrl }) {
+    const user = await this.findOne({ googleId })
+      .select(this.publicFields().join(' '))
       .setOptions({ lean: true });
 
     if (user) {
-      if (_.isEmpty(googleToken) && user.googleId) {
+      if (_.isEmpty(googleToken)) {
         return user;
       }
 
-      const modifier = { googleId };
+      const modifier = {};
       if (googleToken.accessToken) {
         modifier['googleToken.accessToken'] = googleToken.accessToken;
       }
@@ -348,7 +337,8 @@ class UserClass extends mongoose.Model {
         modifier['googleToken.refreshToken'] = googleToken.refreshToken;
       }
 
-      await this.updateOne({ email }, { $set: modifier });
+      await this.updateOne({ googleId }, { $set: modifier });
+
       return user;
     }
 
@@ -362,7 +352,6 @@ class UserClass extends mongoose.Model {
       displayName,
       avatarUrl,
       slug,
-      isSignedupViaGoogle: true,
       // 10
       // defaultTeamSlug: '',
     });
@@ -489,7 +478,7 @@ class UserClass extends mongoose.Model {
       'email',
       'avatarUrl',
       'slug',
-      'isSignedupViaGoogle',
+      'isGithubConnected',
       // 10
       // 'defaultTeamSlug',
 
