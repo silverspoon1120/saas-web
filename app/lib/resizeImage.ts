@@ -1,4 +1,4 @@
-function resizeImage(file: File, MAX_WIDTH, MAX_HEIGHT): Promise<File> {
+function resizeImage(file: File, MAX_WIDTH, MAX_HEIGHT) {
   const img = document.createElement('img');
   const canvas = document.createElement('canvas');
 
