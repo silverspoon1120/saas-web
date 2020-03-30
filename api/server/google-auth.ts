@@ -1,10 +1,14 @@
 import * as passport from 'passport';
 import { OAuth2Strategy as Strategy } from 'passport-google-oauth';
 
+import logger from './logs';
+import Invitation from './models/Invitation';
 import User, { UserDocument } from './models/User';
 
+import { GOOGLE_CLIENTID, GOOGLE_CLIENTSECRET, URL_APP } from './consts';
+
 function setupGoogle({ ROOT_URL, server }) {
-  if (!process.env.GOOGLE_CLIENTID) {
+  if (!GOOGLE_CLIENTID) {
     return;
   }
 
@@ -32,15 +36,15 @@ function setupGoogle({ ROOT_URL, server }) {
       verified(null, user);
     } catch (err) {
       verified(err);
-      console.error(err);
+      logger.error(err);
     }
   };
 
   passport.use(
     new Strategy(
       {
-        clientID: process.env.GOOGLE_CLIENTID,
-        clientSecret: process.env.GOOGLE_CLIENTSECRET,
+        clientID: GOOGLE_CLIENTID,
+        clientSecret: GOOGLE_CLIENTSECRET,
         callbackURL: `${ROOT_URL}/oauth2callback`,
       },
       verify,
@@ -66,6 +70,18 @@ function setupGoogle({ ROOT_URL, server }) {
       prompt: 'select_account',
     };
 
+    if (req.query && req.query.next && req.query.next.startsWith('/')) {
+      req.session.next_url = req.query.next;
+    } else {
+      req.session.next_url = null;
+    }
+
+    if (req.query && req.query.invitationToken) {
+      req.session.invitationToken = req.query.invitationToken;
+    } else {
+      req.session.invitationToken = null;
+    }
+
     passport.authenticate('google', options)(req, res, next);
   });
 
@@ -74,8 +90,29 @@ function setupGoogle({ ROOT_URL, server }) {
     passport.authenticate('google', {
       failureRedirect: '/login',
     }),
-    (_, res) => {
-      res.redirect(`${process.env.URL_APP}/your-settings`);
+    (req, res) => {
+      if (req.user && req.session.invitationToken) {
+        Invitation.addUserToTeam({
+          token: req.session.invitationToken,
+          user: req.user,
+        }).catch((err) => logger.error(err));
+
+        req.session.invitationToken = null;
+      }
+
+      let redirectUrlAfterLogin;
+
+      if (req.user && req.session.next_url) {
+        redirectUrlAfterLogin = req.session.next_url;
+      } else {
+        if (!req.user || !req.user.defaultTeamSlug) {
+          redirectUrlAfterLogin = '/create-team';
+        } else {
+          redirectUrlAfterLogin = `/team/${req.user.defaultTeamSlug}/discussions`;
+        }
+      }
+
+      res.redirect(`${URL_APP}${redirectUrlAfterLogin}`);
     },
   );
 }
